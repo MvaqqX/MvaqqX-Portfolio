@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Developer Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #e5e5e5;
+      background-color: #121212;
+    }
+
+    header {
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h1 {
+      margin: 0;
+      font-weight: 800;
+      font-size: 1.5rem;
+    }
+
+    nav a {
+      color: #aaa;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    /* Showcase */
+    .showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    /* Carousel */
+    .carousel {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: transparent; /* Let background show */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Keep full image ratio */
+    background-color: transparent; /* So empty space shows black */
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    }
+
+
+    .carousel img.active {
+      display: block;
+      opacity: 1;
+      position: relative;
+    }
+
+    /* Carousel controls */
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      padding: 0 10px;
+    }
+
+    .carousel-controls button {
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: white;
+      font-size: 1.4rem;
+      padding: 0.5rem 0.8rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+
+    .carousel-controls button:hover {
+      background: rgba(0,0,0,0.85);
+    }
+
+    .showcase-text {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.8s ease forwards 0.4s;
+    }
+
+    .showcase-text h2 {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .showcase-text p {
+      font-size: 1rem;
+      color: #ccc;
+      max-width: 500px;
+    }
+
+    /* Sections */
+    section {
+      padding: 3rem 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    /* Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: #1e1e1e;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.8s ease forwards;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+    }
+
+    /* Pricing */
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .pricing-plan {
+      background: #1a1a1a;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+
+    .pricing-plan h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.4rem;
+    }
+
+    .price {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 1rem 0;
+      color: #ffdf5d;
+    }
+
+    .pricing-plan ul {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+      color: #bbb;
+      font-size: 0.95rem;
+    }
+
+    .pricing-plan ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-plan button {
+      background: #ff4d4d;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .pricing-plan button:hover {
+      background: #e63e3e;
+    }
+
+    /* About */
+    .about {
+      background: #1a1a1a;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.8s ease forwards;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #777;
+      background: #0e0e0e;
+    }
+
+    /* Animations */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>MvaqqX Portfolio</h1>
+  <nav>
+    <a href="#showcase">Showcase</a>
+    <a href="#systems">Systems</a>
+    <a href="#capabilities">Capabilities</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#about">About</a>
+  </nav>
+</header>
+
+<section id="showcase" class="showcase">
+  <!-- Carousel -->
+  <div class="carousel">
+     <img src="Images/Showcase2.png" alt="Game Showcase 1" class="active">
+    <a href="https://www.roblox.com/games/76510419232547/Tower-Of-Speed" target="_blank">
+        <img src="Images/Showcase1.png" alt="Game Showcase 2">
+    </a>
+    <div class="carousel-controls">
+      <button id="prev">&#9664;</button>
+      <button id="next">&#9654;</button>
+    </div>
+  </div>
+
+  <!-- Showcase text -->
+  <div class="showcase-text">
+    <h2>Experienced Lua Programmer</h2>
+    <p>First Showcase Image Is Always My Most Recent Project <br> 5 Years Of Experience Creating High Quality Data Safe, Modularized Systems <br> Code Snippets Available Upon Request</p>
+  </div>
+</section>
+
+<section id="systems">
+  <h2>Systems</h2>
+  <div class="cards-grid">
+    <div class="card" style="animation-delay: 0.1s;">
+      <h3>Datastores</h3>
+      <p>Capable Of Secure Datasaving That Nicely Integrates With Other Systems</p>
+    </div>
+    <div class="card" style="animation-delay: 0.3s;">
+      <h3>Inventory & Shops</h3>
+      <p>Custom Inventories, Currency Systems, And In-Game Stores.</p>
+    </div>
+    <div class="card" style="animation-delay: 0.5s;">
+      <h3>Roblox API Integration</h3>
+      <p>Interaction With The Roblox API - Like Goal Systems, Fetching Game Stats</p>
+    </div>
+  </div>
+</section>
+
+<section id="capabilities">
+  <h2>Capabilities</h2>
+  <div class="cards-grid">
+    <div class="card">
+      <h3>OOP Pattern</h3>
+      <p>Familar With Clean OOP Pattern To Decrease Development Time and Make Clean Systems Developers Can Interact With</p>
+    </div>
+    <div class="card">
+      <h3>UI Programming</h3>
+      <p>Can Program UI Systems That Work Seamlessly On Mobile And Have Nice Animations</p>
+    </div>
+    <div class="card">
+      <h3>Modularized Code</h3>
+      <p>Writes Code That Is Split Across Modules So Future Additions Consist Of Importing The Module</p>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <h2>Pricing (Robux Only)</h2>
+  <div class="pricing">
+    <div class="pricing-plan">
+      <h3>Basic</h3>
+      <p class="price">1,500 R$+</p>
+      <ul>
+        <li>Small Script or System</li>
+        <li>Delivered in 1-2 Days</li>
+        <li>1 Revision</li>
+      </ul>
+      <button onclick="window.open('https://discord.com/users/976993111454654515', '_blank')">Order</button>
+    </div>
+    <div class="pricing-plan">
+      <h3>Standard</h3>
+      <p class="price">5,000 R$+</p>
+      <ul>
+        <li>Full System or Feature</li>
+        <li>Delivered in 3-5 Days</li>
+        <li>3 Revisions</li>
+      </ul>
+      <button onclick="window.open('https://discord.com/users/976993111454654515', '_blank')">Order</button>
+    </div>
+    <div class="pricing-plan">
+      <h3>Premium</h3>
+      <p class="price">10,000+ R$</p>
+      <ul>
+        <li>Multiple Systems / Full Game Core</li>
+        <li>Delivery Time Negotiable</li>
+        <li>5 Revisions</li>
+      </ul>
+      <button onclick="window.open('https://discord.com/users/976993111454654515', '_blank')">Order</button>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <h2>About Me</h2>
+  <div class="about" style="animation-delay: 0.2s;">
+    <p>Hey, I'm A Roblox Scripter Who Has 5 Years Of Experience, I'm Just Getting Starting In Commisions Though, I Work In A Studio With Another Developer, Our Goal Is To Fund Personal Projects Through Commision, If You Have Any Questions Please Message Me</p>
+  </div>
+</section>
+
+<script>
+  const images = document.querySelectorAll('.carousel img');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  let currentIndex = 0;
+  let autoSlide;
+
+  function showImage(index) {
+    images.forEach((img, i) => {
+      img.classList.remove('active');
+      if (i === index) {
+        img.classList.add('active');
+      }
+    });
+    currentIndex = index;
+  }
+
+  function nextImage() {
+    let newIndex = (currentIndex + 1) % images.length;
+    showImage(newIndex);
+  }
+
+  function prevImage() {
+    let newIndex = (currentIndex - 1 + images.length) % images.length;
+    showImage(newIndex);
+  }
+
+  function startAutoSlide() {
+    autoSlide = setInterval(nextImage, 4000);
+  }
+
+  function stopAutoSlide() {
+    clearInterval(autoSlide);
+  }
+
+  nextBtn.addEventListener('click', () => {
+    nextImage();
+    stopAutoSlide();
+    startAutoSlide();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    prevImage();
+    stopAutoSlide();
+    startAutoSlide();
+  });
+
+  startAutoSlide();
+</script>
+
+</body>
+</html>
