@@ -1,420 +1,475 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MvaqqX Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
+    /* Reset & base */
+
     html {
       scroll-behavior: smooth;
     }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #f0f0f0;
       line-height: 1.6;
-      color: #e5e5e5;
-      background-color: #121212;
+      overflow-x: hidden;
     }
+    a { text-decoration: none; color: inherit; }
+    section { padding: 4rem 2rem; max-width: 1100px; margin: auto; }
 
-    header {
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(6px);
-      color: #fff;
-      padding: 1rem 2rem;
+    /* Navbar */
+    nav {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1.5rem;
+      background: rgba(0,0,0,0.7);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
+      backdrop-filter: blur(8px);
     }
-
-    header h1 {
-      margin: 0;
-      font-weight: 800;
-      font-size: 1.5rem;
-    }
-
     nav a {
-      color: #aaa;
-      margin-left: 1rem;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #fff;
-    }
-
-    /* Showcase */
-    .showcase {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      align-items: center;
-      padding: 4rem 2rem;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    /* Carousel */
-    .carousel {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: transparent; /* Let background show */
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    }
-
-    .carousel img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Keep full image ratio */
-    background-color: transparent; /* So empty space shows black */
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    transition: opacity 0.8s ease;
-    }
-
-
-    .carousel img.active {
-      display: block;
-      opacity: 1;
       position: relative;
+      font-weight: 600;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-
-    /* Carousel controls */
-    .carousel-controls {
+    nav a::after {
+      content: '';
       position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: space-between;
-      transform: translateY(-50%);
-      padding: 0 10px;
+      left: 0; bottom: -4px;
+      width: 0%; height: 2px;
+      background: #ff4d4d;
+      transition: width 0.3s ease;
     }
+    nav a:hover::after { width: 100%; }
 
+    /* Hero */
+    .hero { text-align: center; padding: 6rem 2rem; }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, #ff4d4d, #ffdf5d);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .hero p { font-size: 1.2rem; opacity: 0.85; }
+
+    /* Showcase Carousel */
+    .showcase { text-align: center; }
+    .carousel {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-slide {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 1s ease, transform 1s ease;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .carousel-slide.active {
+      opacity: 1;
+      transform: scale(1);
+      z-index: 1;
+    }
+    .carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #000;
+    }
+    /* overlays above images */
+    .caption,
+    .carousel-controls,
+    .carousel-indicators { position: absolute; z-index: 2; }
+    .caption {
+      bottom: 0; left: 0; right: 0;
+      padding: 1rem 1.5rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      color: #fff;
+      text-align: left;
+    }
+    .caption h3 { margin: 0 0 0.3rem; font-size: 1.2rem; font-weight: 700; }
+    .caption p { font-size: 0.9rem; opacity: 0.9; }
+    .carousel-controls {
+      top: 50%; width: 100%;
+      display: flex; justify-content: space-between;
+      padding: 0 1rem;
+      transform: translateY(-50%);
+    }
     .carousel-controls button {
       background: rgba(0,0,0,0.6);
-      border: none;
-      color: white;
-      font-size: 1.4rem;
-      padding: 0.5rem 0.8rem;
+      border: none; color: white;
+      font-size: 1.8rem;
+      padding: 0.4rem 0.7rem;
+      border-radius: 50%;
       cursor: pointer;
-      border-radius: 4px;
       transition: background 0.3s ease;
     }
-
-    .carousel-controls button:hover {
-      background: rgba(0,0,0,0.85);
+    .carousel-controls button:hover { background: rgba(0,0,0,0.9); }
+    .carousel-indicators {
+      bottom: 12px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 8px;
     }
-
-    .showcase-text {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: slideUp 0.8s ease forwards 0.4s;
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
+    .dot.active, .dot:hover { background: #fff; }
 
-    .showcase-text h2 {
-      font-size: 2.4rem;
-      margin-bottom: 1rem;
-    }
-
-    .showcase-text p {
-      font-size: 1rem;
-      color: #ccc;
-      max-width: 500px;
-    }
-
-    /* Sections */
-    section {
-      padding: 3rem 2rem;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    section h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
-    /* Cards */
-    .cards-grid {
+    /* Cards Grid */
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-    }
-
-    .card {
-      background: #1e1e1e;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: slideUp 0.8s ease forwards;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
-    }
-
-    /* Pricing */
-    .pricing {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
       margin-top: 2rem;
     }
+    .card {
+      background: #1e1e1e;
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0; transform: translateY(40px);
+    }
+    .card.visible {
+      opacity: 1; transform: translateY(0);
+      transition: all 0.6s ease-out;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    }
+    .card h3 { margin-bottom: 0.6rem; color: #ff4d4d; }
 
-    .pricing-plan {
-      background: #1a1a1a;
+    /* Pricing */
+    .pricing { text-align: center; }
+    .pricing-plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 2rem;
+    }
+    .plan {
+      background: #1e1e1e;
       padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      text-align: center;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-
-    .pricing-plan h3 {
+    .plan h3 {
       margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #ff4d4d, #ffdf5d);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
       font-size: 1.4rem;
+      font-weight: 700;
     }
-
-    .price {
-      font-size: 1.8rem;
-      font-weight: bold;
+    .plan ul {
+      list-style: none;
       margin: 1rem 0;
+      padding: 0;
+      text-align: left;
+    }
+    .plan ul li {
+      margin: 0.4rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+      opacity: 0.9;
+    }
+    .plan ul li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
       color: #ffdf5d;
     }
-
-    .pricing-plan ul {
-      list-style: none;
-      padding: 0;
+    .price {
+      font-size: 1.8rem;
       margin: 1rem 0;
-      color: #bbb;
-      font-size: 0.95rem;
-    }
-
-    .pricing-plan ul li {
-      margin-bottom: 0.5rem;
-    }
-
-    .pricing-plan button {
-      background: #ff4d4d;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      color: white;
-      border-radius: 4px;
-      cursor: pointer;
       font-weight: bold;
-      transition: background 0.3s ease;
+      color: #ff4d4d;
+    }
+    .plan:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+      border-color: #ff4d4d;
+    }
+    .plan.featured {
+      border-color: #ffdf5d;
+      transform: scale(1.05);
     }
 
-    .pricing-plan button:hover {
-      background: #e63e3e;
+    /* Order Buttons */
+    .order-btn {
+      background: linear-gradient(90deg, #ff4d4d, #ffdf5d);
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      margin-top: 1rem;
     }
+    .order-btn:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    /* Media Section */
+    .media-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .media-item {
+      background: #1e1e1e;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0.5rem;
+    }
+    .media-item img,
+    .media-item video {
+      width: 100%;
+      border-radius: 6px;
+      display: block;
+    }
+    .media-item p {
+      margin-top: 0.6rem;
+      font-size: 0.95rem;
+      color: #ddd;
+      opacity: 0.85;
+    }
+    .media-item:hover { transform: scale(1.03); }
 
     /* About */
-    .about {
-      background: #1a1a1a;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      opacity: 0;
-      transform: translateY(20px);
-      animation: slideUp 0.8s ease forwards;
-    }
+    .about p { max-width: 700px; margin: auto; opacity: 0.9; }
 
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #777;
-      background: #0e0e0e;
-    }
-
-    /* Animations */
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
+    /* Animations on scroll */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.6s ease-out;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+      animation: fadeUp 0.6s ease-out;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>MvaqqX Portfolio</h1>
+  <!-- Navbar -->
   <nav>
     <a href="#showcase">Showcase</a>
+    <a href="#media">Media</a>
     <a href="#systems">Systems</a>
     <a href="#capabilities">Capabilities</a>
     <a href="#pricing">Pricing</a>
     <a href="#about">About</a>
   </nav>
-</header>
 
-<section id="showcase" class="showcase">
-  <!-- Carousel -->
-  <div class="carousel">
-     <img src="Images/Showcase2.png" alt="Game Showcase 1" class="active">
-    <a href="https://www.roblox.com/games/76510419232547/Tower-Of-Speed" target="_blank">
-        <img src="Images/Showcase1.png" alt="Game Showcase 2">
-    </a>
-    <div class="carousel-controls">
-      <button id="prev">&#9664;</button>
-      <button id="next">&#9654;</button>
-    </div>
-  </div>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>RBX Systems & Scripting</h1>
+    <p>Modular, scalable Roblox systems built clean with OOP patterns and reliable data saving.</p>
+  </section>
 
-  <!-- Showcase text -->
-  <div class="showcase-text">
-    <h2>Experienced Lua Programmer</h2>
-    <p>First Showcase Image Is Always My Most Recent Project <br> 5 Years Of Experience Creating High Quality Data Safe, Modularized Systems <br> Code Snippets Available Upon Request</p>
-  </div>
-</section>
+  <!-- Showcase -->
+  <section id="showcase" class="showcase">
+    <div class="carousel">
+      <div class="carousel-slide active">
+        <img src="Images/Showcase2.png" alt="Avatar Render">
+        <div class="caption">
+          <h3>Avatar Render</h3>
+          <p>A piece of art used for advertisement purposes</p>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <a href="https://www.roblox.com/games/76510419232547/Tower-Of-Speed-Free-Halos">
+            <img src="Images/Showcase1.png" alt="Avatar Render">
+        </a>
+        <div class="caption">
+          <h3>Tower Of Speed</h3>
+          <p>A high quality game inspired from tower of hell, full featured and polished.</p>
+        </div>
+      </div>
 
-<section id="systems">
-  <h2>Systems</h2>
-  <div class="cards-grid">
-    <div class="card" style="animation-delay: 0.1s;">
-      <h3>Datastores</h3>
-      <p>Capable Of Secure Datasaving That Nicely Integrates With Other Systems</p>
-    </div>
-    <div class="card" style="animation-delay: 0.3s;">
-      <h3>Inventory & Shops</h3>
-      <p>Custom Inventories, Currency Systems, And In-Game Stores.</p>
-    </div>
-    <div class="card" style="animation-delay: 0.5s;">
-      <h3>Roblox API Integration</h3>
-      <p>Interaction With The Roblox API - Like Goal Systems, Fetching Game Stats</p>
-    </div>
-  </div>
-</section>
+      <!-- Controls -->
+      <div class="carousel-controls">
+        <button id="prev">&#10094;</button>
+        <button id="next">&#10095;</button>
+      </div>
 
-<section id="capabilities">
-  <h2>Capabilities</h2>
-  <div class="cards-grid">
-    <div class="card">
-      <h3>OOP Pattern</h3>
-      <p>Familar With Clean OOP Pattern To Decrease Development Time and Make Clean Systems Developers Can Interact With</p>
+      <!-- Indicators -->
+      <div class="carousel-indicators">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+      </div>
     </div>
-    <div class="card">
-      <h3>UI Programming</h3>
-      <p>Can Program UI Systems That Work Seamlessly On Mobile And Have Nice Animations</p>
-    </div>
-    <div class="card">
-      <h3>Modularized Code</h3>
-      <p>Writes Code That Is Split Across Modules So Future Additions Consist Of Importing The Module</p>
-    </div>
-  </div>
-</section>
 
-<section id="pricing">
-  <h2>Pricing (Robux Only)</h2>
-  <div class="pricing">
-    <div class="pricing-plan">
-      <h3>Basic</h3>
-      <p class="price">1,500 R$+</p>
-      <ul>
-        <li>Small Script or System</li>
-        <li>Delivered in 1-2 Days</li>
-        <li>1 Revision</li>
-      </ul>
-      <button onclick="window.open('https://discord.com/users/976993111454654515', '_blank')">Order</button>
+    <div class="showcase-text fade-up">
+      <h2>Showcase</h2>
+      <p>Highlights that reflect my scripting style — data-safe systems, modular code, and smooth player experiences. Code snippets or demos available on request.</p>
     </div>
-    <div class="pricing-plan">
-      <h3>Standard</h3>
-      <p class="price">5,000 R$+</p>
-      <ul>
-        <li>Full System or Feature</li>
-        <li>Delivered in 3-5 Days</li>
-        <li>3 Revisions</li>
-      </ul>
-      <button onclick="window.open('https://discord.com/users/976993111454654515', '_blank')">Order</button>
+  </section>
+
+  <!-- Media Section -->
+  <section id="media" class="media">
+    <h2>Media</h2>
+    <div class="media-gallery">
+      <div class="media-item">
+        <video src="Media/Media1.mp4" controls></video>
+        <p>Custom Made Region Based Coloring System</p>
+      </div>
+      <div class="media-item">
+        <video src="Media/Media2.mp4" controls></video>
+        <p>Real Time Like Goal Manager</p>
+      </div>
+      <div class="media-item">
+        <video src="Media/Media3.mp4" controls></video>
+        <p>Custom Physics Based Ragdoll System</p>
+      </div>
     </div>
-    <div class="pricing-plan">
-      <h3>Premium</h3>
-      <p class="price">10,000+ R$</p>
-      <ul>
-        <li>Multiple Systems / Full Game Core</li>
-        <li>Delivery Time Negotiable</li>
-        <li>5 Revisions</li>
-      </ul>
-      <button onclick="window.open('https://discord.com/users/976993111454654515', '_blank')">Order</button>
+  </section>
+
+  <!-- Systems -->
+  <section id="systems">
+    <h2>Systems</h2>
+    <div class="grid">
+      <div class="card"><h3>Datastores</h3><p>Rock-solid data saving that actually survives Roblox crashes and scales with your player base.</p></div>
+      <div class="card"><h3>Inventory & Shops</h3><p>Fully custom shops and inventories — no spaghetti code, just systems that feel native.</p></div>
+      <div class="card"><h3>Roblox API Integration</h3><p>Seamless API integrations — leaderboards, goal tracking, game stats, whatever you need.</p></div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="about">
-  <h2>About Me</h2>
-  <div class="about" style="animation-delay: 0.2s;">
-    <p>Hey, I'm A Roblox Scripter Who Has 5 Years Of Experience, I'm Just Getting Starting In Commisions Though, I Work In A Studio With Another Developer, Our Goal Is To Fund Personal Projects Through Commision, If You Have Any Questions Please Message Me</p>
-  </div>
-</section>
+  <!-- Capabilities -->
+  <section id="capabilities">
+    <h2>Capabilities</h2>
+    <div class="grid">
+      <div class="card"><h3>OOP Pattern</h3><p>Clean OOP design, meaning faster dev time and code that won’t break when you add new features.</p></div>
+      <div class="card"><h3>UI Programming</h3><p>UI that doesn’t just work — it feels smooth, mobile-friendly, with animations that don’t lag.</p></div>
+      <div class="card"><h3>Modularized Code</h3><p>Everything split into modules so you can drop in features without rewriting your whole game.</p></div>
+    </div>
+  </section>
 
-<script>
-  const images = document.querySelectorAll('.carousel img');
-  const prevBtn = document.getElementById('prev');
-  const nextBtn = document.getElementById('next');
-  let currentIndex = 0;
-  let autoSlide;
+  <!-- Pricing -->
+  <section id="pricing" class="pricing">
+    <h2>Pricing (Robux Only)</h2>
+    <div class="pricing-plans">
+      <div class="plan">
+        <h3>Basic</h3>
+        <div class="price">2,000 R$+</div>
+        <ul>
+          <li>Small fixes or patches</li>
+          <li>Minor UI tweaks</li>
+          <li>Single feature setup</li>
+        </ul>
+          <a href="https://discord.com/users/976993111454654515">
+            <button class="order-btn">Order</button>
+        </a>
+      </div>
+      <div class="plan featured">
+        <h3>Standard</h3>
+        <div class="price">5,000 R$+</div>
+        <ul>
+          <li>Full system integration</li>
+          <li>Datastore reliability</li>
+          <li>Optimized performance</li>
+        </ul>
+        <a href="https://discord.com/users/976993111454654515">
+          <button class="order-btn">Order</button>
+        </a>
+      </div>
+      <div class="plan">
+        <h3>Premium</h3>
+        <div class="price">20,000 R$+</div>
+        <ul>
+          <li>Multi-system package</li>
+          <li>Custom modular solutions</li>
+          <li>Support for scaling projects</li>
+        </ul>
+        <a href="https://discord.com/users/976993111454654515">
+          <button class="order-btn">Order</button>
+        </a>
+      </div>
+    </div>
+  </section>
 
-  function showImage(index) {
-    images.forEach((img, i) => {
-      img.classList.remove('active');
-      if (i === index) {
-        img.classList.add('active');
-      }
+  <!-- About -->
+  <section id="about" class="about">
+    <h2>About Me</h2>
+    <p>I’ve been scripting on Roblox for 5 years, but I’m new to commissions. I’m part of a small dev studio — we fund personal projects by delivering polished systems for others. If you need reliable, modular code that won’t collapse under scale, let’s talk.</p>
+  </section>
+
+  <!-- Scripts -->
+  <script>
+    // Cards scroll reveal
+    const cards = document.querySelectorAll('.card, .fade-up');
+    window.addEventListener('scroll', () => {
+      cards.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) el.classList.add('visible');
+      });
     });
-    currentIndex = index;
-  }
 
-  function nextImage() {
-    let newIndex = (currentIndex + 1) % images.length;
-    showImage(newIndex);
-  }
-
-  function prevImage() {
-    let newIndex = (currentIndex - 1 + images.length) % images.length;
-    showImage(newIndex);
-  }
-
-  function startAutoSlide() {
-    autoSlide = setInterval(nextImage, 4000);
-  }
-
-  function stopAutoSlide() {
-    clearInterval(autoSlide);
-  }
-
-  nextBtn.addEventListener('click', () => {
-    nextImage();
-    stopAutoSlide();
-    startAutoSlide();
-  });
-
-  prevBtn.addEventListener('click', () => {
-    prevImage();
-    stopAutoSlide();
-    startAutoSlide();
-  });
-
-  startAutoSlide();
-</script>
-
+    // Carousel
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.dot');
+    let index = 0;
+    function showSlide(i) {
+      slides.forEach((s, idx) => {
+        s.classList.remove('active');
+        dots[idx].classList.remove('active');
+      });
+      slides[i].classList.add('active');
+      dots[i].classList.add('active');
+      index = i;
+    }
+    document.getElementById('next').onclick = () => showSlide((index + 1) % slides.length);
+    document.getElementById('prev').onclick = () => showSlide((index - 1 + slides.length) % slides.length);
+    dots.forEach(dot => dot.onclick = () => showSlide(parseInt(dot.dataset.index)));
+    setInterval(() => showSlide((index + 1) % slides.length), 5000);
+  </script>
 </body>
-
 </html>
